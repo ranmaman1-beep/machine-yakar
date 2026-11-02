@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מוצר שלם ביום אחד</title>
+<meta name="description" content="יום סדנה אחד שבו בונים מוצר שלם לעסק, באוויר עוד באותו ערב, במקום לשלם אלפי שקלים לספקים.">
+<meta property="og:title" content="מוצר שלם ביום אחד. במקום אלפי שקלים לספקים.">
+<meta property="og:description" content="דף נחיתה, אוטומציה או דשבורד שאתה בונה בעצמך, באוויר עוד באותו ערב. 8.11, עפולה.">
+<meta property="og:image" content="https://ai.yossilevi.co.il/assets/launch-city-Br3__wiy.png">
+<meta property="og:locale" content="he_IL">
+<meta name="theme-color" content="#0a0a0f">
+<script>
+document.documentElement.className += " js";
+/* if the main script never starts, show everything instead of leaving sections hidden */
+setTimeout(function () { if (!window.__machineReady) document.documentElement.className = document.documentElement.className.replace(" js", ""); }, 3000);
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+:root {
+  --ink: #0a0a0f;
+  --night: #12101e;
+  --card: #191627;
+  --hairline: #2b2740;
+  --paper: #f5f3f0;
+  --muted: #a09dad;
+  --flame: #ff5c38;
+  --flame-soft: #ff8a5c;
+  --volt: #8b5cf6;
+  --volt-soft: #b79cff;
+  --font-body: "Heebo", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --grad: linear-gradient(to left, var(--flame), var(--volt));
+  --grad-br: linear-gradient(to bottom right, var(--flame), var(--volt));
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: dark;
+}
+@property --a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; line-height: 1.5; }
+body { background: var(--ink); color: var(--paper); font-family: var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; background: transparent; }
+svg { display: block; }
+h1, h2, h3 { font-size: inherit; font-weight: inherit; text-wrap: balance; }
+::selection { background: rgba(255, 92, 56, .35); }
+.n { direction: ltr; unicode-bidi: isolate; font-variant-numeric: tabular-nums; }
+
+/* ---------- shared pieces (same as the workshop page) ---------- */
+.wrap { position: relative; margin-inline: auto; padding-inline: max(24px, env(safe-area-inset-left, 0px)); }
+.w6 { max-width: 72rem; } .w5 { max-width: 64rem; } .w3 { max-width: 48rem; }
+.sec { position: relative; overflow: hidden; }
+.sec-pad { padding-block: 5rem; }
+@media (min-width: 48rem) { .sec-pad { padding-block: 7rem; } }
+.bg-ink { background: var(--ink); } .bg-night { background: var(--night); }
+
+.text-machine {
+  background: linear-gradient(90deg, var(--flame) 0%, var(--flame-soft) 25%, var(--volt-soft) 50%, var(--flame-soft) 75%, var(--flame) 100%);
+  background-size: 200%; color: transparent; -webkit-background-clip: text; background-clip: text;
+  animation: gradient-pan 6s linear infinite;
+}
+.eyebrow { display: inline-flex; align-items: center; gap: .5rem; font-size: .875rem; line-height: 1.25rem; font-weight: 900; letter-spacing: .1em; color: var(--flame); }
+.eyebrow::before { content: ""; width: 1.5rem; height: 2px; border-radius: 2px; background: currentColor; box-shadow: 0 0 10px currentColor; }
+.eyebrow.volt { color: var(--volt-soft); }
+.h2 { font-size: 2.25rem; font-weight: 900; line-height: 1.12; max-width: 48rem; }
+@media (min-width: 48rem) { .h2 { font-size: 3rem; } }
+.head { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; text-align: center; margin-bottom: 3rem; }
+
+.btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: .625rem;
+  border-radius: 999px; background: var(--grad); color: var(--paper);
+  padding: 1rem 2.5rem; font-size: 1.125rem; font-weight: 900; text-align: center;
+  box-shadow: 0 18px 60px -12px rgba(255, 92, 56, .7), inset 0 1px 0 rgba(255, 255, 255, .25);
+  transition: transform .2s cubic-bezier(.4, 0, .2, 1), box-shadow .2s;
+}
+/* light sweep across the button */
+.btn::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .38) 50%, transparent 70%);
+  transform: translateX(130%); animation: sweep 3.8s ease-in-out infinite;
+}
+.btn svg { width: 1.375rem; height: 1.375rem; flex: none; }
+@media (hover: hover) { .btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 24px 70px -10px rgba(255, 92, 56, .85), inset 0 1px 0 rgba(255, 255, 255, .25); } }
+.btn:focus-visible, .ghost:focus-visible, .textlink:focus-visible, .qty button:focus-visible, .chk input:focus-visible + .box { outline: 3px solid var(--flame-soft); outline-offset: 3px; }
+
+.glow { pointer-events: none; position: absolute; border-radius: 999px; filter: blur(64px); animation: pulse-glow 3.2s ease-in-out infinite; }
+.bgimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shade { position: absolute; inset: 0; }
+.deco { pointer-events: none; position: absolute; inset: 0; overflow: hidden; }
+.deco svg { position: absolute; }
+.spin { animation: spin 24s linear infinite; }
+.spin.rev { animation-direction: reverse; }
+.float { animation: float 7s ease-in-out infinite; }
+.float-slow { animation: float 11s ease-in-out infinite; }
+
+/* moving tech grid behind sections */
+.gridbg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(139, 92, 246, .09) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, .09) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 15%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 15%, transparent 75%);
+  animation: grid-drift 14s linear infinite;
+}
+
+/* sections start visible; they only hide-and-reveal when the script is running */
+.js .reveal { opacity: 0; transform: translateY(36px); filter: blur(10px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out); }
+.js .reveal.revealed { opacity: 1; transform: translateY(0); filter: none; }
+.d1 { transition-delay: .12s; } .d2 { transition-delay: .24s; } .d3 { transition-delay: .36s; }
+/* children that cascade in one after another */
+.js .stg > * { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s var(--ease-out); transition-delay: calc(var(--i, 0) * 75ms + .3s); }
+.js .revealed .stg > *, .js .stg.revealed > * { opacity: 1; transform: none; }
+
+/* glowing beam that travels around a card border */
+.beam { border: 2px solid transparent !important; animation: beam 6s linear infinite; }
+.beam-c { --beam: conic-gradient(from var(--a), rgba(255, 92, 56, .22) 0deg, var(--flame) 40deg, var(--volt-soft) 80deg, rgba(139, 92, 246, .22) 130deg, rgba(139, 92, 246, .22) 220deg, rgba(255, 92, 56, .22) 360deg); }
+
+/* pointer spotlight on cards */
+.spot { position: relative; }
+.spot::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, -30%), rgba(255, 138, 92, .13), rgba(139, 92, 246, .06) 40%, transparent 65%);
+  opacity: 0; transition: opacity .35s;
+}
+.spot > * { position: relative; z-index: 1; }
+@media (hover: hover) { .spot:hover::before { opacity: 1; } }
+
+/* scroll progress */
+.progress { position: fixed; top: env(safe-area-inset-top, 0px); inset-inline: 0; height: 3px; z-index: 60; pointer-events: none; background: var(--grad); box-shadow: 0 0 12px rgba(255, 92, 56, .8); transform-origin: right; transform: scaleX(0); }
+
+/* ---------- header ---------- */
+.hero-sec { isolation: isolate; }
+#net { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.floor {
+  position: absolute; z-index: 1; left: -50%; right: -50%; bottom: 0; height: 30%; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 92, 56, .28) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, .28) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(420px) rotateX(64deg); transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .6) 35%, transparent 90%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .6) 35%, transparent 90%);
+  animation: floor 2.6s linear infinite;
+}
+nav { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding-block: 1.75rem; }
+.logo { display: inline-flex; align-items: center; gap: .75rem; direction: ltr; }
+.logo-mark { display: flex; width: 2.75rem; height: 2.75rem; align-items: center; justify-content: center; border-radius: .75rem; background: var(--grad-br); box-shadow: 0 8px 24px -6px rgba(255, 92, 56, .6); }
+.logo-words { display: flex; flex-direction: column; line-height: 1; }
+.logo-words .a { font-size: .68rem; font-weight: 500; letter-spacing: .42em; color: var(--muted); }
+.logo-words .b { margin-top: .25rem; font-size: 1.25rem; font-weight: 900; letter-spacing: -.025em; color: var(--paper); }
+.ghost { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; border: 1px solid rgba(255, 92, 56, .6); background: rgba(10, 10, 15, .35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding: .625rem 1.25rem; font-size: .875rem; font-weight: 700; color: var(--flame-soft); transition: background-color .15s; }
+.ghost svg { width: 1rem; height: 1rem; }
+@media (hover: hover) { .ghost:hover { background: rgba(255, 92, 56, .12); } }
+
+.hero { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 2rem; padding-top: 2.5rem; padding-bottom: 6rem; text-align: center; }
+@media (min-width: 48rem) { .hero { padding-top: 4rem; padding-bottom: 8rem; } }
+.pill { display: inline-flex; align-items: center; gap: .625rem; border-radius: 999px; border: 1px solid rgba(139, 92, 246, .5); background: rgba(139, 92, 246, .12); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); padding: .5rem 1.25rem; font-size: .875rem; font-weight: 600; color: var(--volt-soft); }
+.live { position: relative; width: .5rem; height: .5rem; border-radius: 999px; background: var(--flame); flex: none; }
+.live::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--flame); animation: ping 1.8s cubic-bezier(0, 0, .2, 1) infinite; }
+.h1 { max-width: 60rem; font-size: 3rem; font-weight: 900; line-height: 1.08; }
+@media (max-width: 39.99rem) { .h1 { font-size: 2.75rem; } }
+@media (min-width: 48rem) { .h1 { font-size: 4.5rem; } }
+.ln { position: relative; display: block; width: fit-content; max-width: 100%; margin-inline: auto; }
+.ln-t { display: block; }
+/* laser scan that writes the headline in, right to left */
+.js .h1 .ln-t { clip-path: inset(0 0 0 100%); }
+.js .h1 .ln.go .ln-t { animation: scan-in 1.05s cubic-bezier(.65, 0, .35, 1) forwards; }
+.ln::after { content: ""; position: absolute; top: -8%; bottom: -8%; right: 0; width: 3px; border-radius: 3px; background: linear-gradient(var(--flame-soft), var(--volt-soft)); box-shadow: 0 0 22px 5px rgba(255, 120, 80, .65); opacity: 0; pointer-events: none; }
+.js .h1 .ln.go::after { animation: scan-bar 1.05s cubic-bezier(.65, 0, .35, 1) forwards; }
+.lead { font-size: 1.125rem; line-height: 1.625; font-weight: 500; color: var(--muted); max-width: 36rem; }
+@media (min-width: 48rem) { .lead { font-size: 1.25rem; } }
+.hero-ctas { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+@media (min-width: 40rem) { .hero-ctas { flex-direction: row; } }
+.textlink { font-size: 1rem; font-weight: 700; color: var(--muted); text-underline-offset: 4px; transition: color .15s; }
+@media (hover: hover) { .textlink:hover { color: var(--paper); text-decoration: underline; } }
+.console {
+  display: flex; align-items: center; gap: .625rem; width: 100%; max-width: 24rem; min-height: 2.75rem;
+  border-radius: .875rem; border: 1px solid var(--hairline); background: rgba(18, 16, 30, .75);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: .625rem 1rem; font-family: var(--font-mono); font-size: .875rem; text-align: start; color: var(--paper);
+  box-shadow: 0 24px 80px -24px rgba(139, 92, 246, .45);
+}
+.console .pr { color: var(--flame-soft); flex: none; }
+.console .ok { color: var(--flame-soft); }
+.caret { display: inline-block; width: .5rem; height: 1.05rem; background: var(--flame); animation: blink 1s step-end infinite; flex: none; }
+
+/* ---------- marquee ---------- */
+.marquee { border-block: 1px solid var(--hairline); background: var(--night); padding-block: 1.25rem; overflow: hidden; direction: ltr; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; width: max-content; gap: 1rem; animation: marquee 34s linear infinite; }
+.chip { display: flex; align-items: center; gap: .75rem; white-space: nowrap; border-radius: 999px; border: 1px solid var(--hairline); background: var(--card); padding: .625rem 1.5rem; font-size: .875rem; font-weight: 700; color: var(--muted); direction: rtl; }
+.chip i { width: .5rem; height: .5rem; border-radius: 999px; background: var(--grad); box-shadow: 0 0 8px rgba(255, 92, 56, .7); }
+.chip em { font-style: normal; color: var(--flame-soft); }
+
+/* ---------- outside vs one day ---------- */
+.vs { display: grid; gap: 1.25rem; }
+@media (min-width: 48rem) { .vs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.side { display: flex; flex-direction: column; border-radius: 1.5rem; padding: 2rem; border: 1px solid var(--hairline); background: rgba(25, 22, 39, .55); }
+.side .tag { align-self: flex-start; border-radius: 999px; padding: .25rem .875rem; font-size: .8125rem; font-weight: 900; letter-spacing: .05em; background: rgba(43, 39, 64, .6); color: var(--muted); }
+.side ul { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.side li { display: flex; align-items: flex-start; gap: .75rem; font-size: 1.0625rem; line-height: 1.5; color: rgba(245, 243, 240, .7); }
+.side li b { font-weight: 800; color: var(--paper); }
+.side li i { flex: none; margin-top: .1875rem; width: 1.25rem; height: 1.25rem; border-radius: 999px; position: relative; }
+.side li i.x { background: rgba(43, 39, 64, .9); }
+.side li i.x::before, .side li i.x::after { content: ""; position: absolute; left: 50%; top: 50%; width: .625rem; height: 2px; border-radius: 2px; background: var(--muted); }
+.side li i.x::before { transform: translate(-50%, -50%) rotate(45deg); }
+.side li i.x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.side li i.v { background: var(--grad-br); box-shadow: 0 0 12px rgba(255, 92, 56, .55); }
+.side li i.v::before { content: ""; position: absolute; left: 50%; top: 45%; width: .5rem; height: .3rem; border-left: 2px solid var(--paper); border-bottom: 2px solid var(--paper); transform: translate(-50%, -50%) rotate(-45deg); }
+.side.hot { background: linear-gradient(to bottom right, var(--card), var(--night)) padding-box, var(--beam) border-box; box-shadow: 0 20px 70px -30px rgba(255, 92, 56, .6); }
+.side.hot .tag { background: rgba(255, 92, 56, .2); color: var(--flame-soft); }
+.side.hot li { color: var(--paper); }
+.side.hot li b { color: var(--flame-soft); }
+.side .cost { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--hairline); font-size: 1.875rem; font-weight: 900; line-height: 1.1; }
+@media (max-width: 39.99rem) { .side { padding: 1.5rem; } .side li { font-size: 1rem; } }
+
+/* ---------- price list ---------- */
+.list { position: relative; overflow: hidden; border-radius: 2rem; border: 1px solid var(--hairline); background: var(--card); padding: .5rem 1.75rem; box-shadow: 0 24px 80px -24px rgba(139, 92, 246, .35); }
+.list::after { content: ""; position: absolute; inset-inline: 0; top: 0; height: 2px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--flame-soft), var(--volt-soft), transparent); box-shadow: 0 0 18px 3px rgba(255, 120, 80, .5); opacity: 0; }
+.js .list.revealed::after { animation: scan-down 1.6s .35s ease-in-out forwards; }
+.li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.125rem; border-bottom: 1px solid var(--hairline); }
+.li:last-child { border-bottom: 0; }
+.li > span { display: flex; align-items: center; gap: .75rem; font-size: 1.0625rem; font-weight: 700; min-width: 0; }
+.li > span::before { content: ""; flex: none; width: .5rem; height: .5rem; border-radius: 999px; background: var(--grad); box-shadow: 0 0 8px rgba(255, 92, 56, .6); }
+.li b { flex: none; font-size: 1.25rem; font-weight: 900; color: var(--flame-soft); white-space: nowrap; transition: color .2s, text-shadow .2s; }
+@media (hover: hover) { .li:hover b { color: var(--paper); text-shadow: 0 0 14px rgba(255, 138, 92, .8); } }
+@media (max-width: 39.99rem) {
+  .list { padding: .25rem 1.125rem; border-radius: 1.5rem; }
+  .li > span { font-size: .9375rem; }
+  .li b { font-size: 1.0625rem; }
+}
+.note { margin-top: 1.25rem; text-align: center; font-size: .875rem; color: var(--muted); }
+
+/* ---------- calculator ---------- */
+.calc-card { border-radius: 2.5rem; border: 1px solid var(--hairline); background: linear-gradient(to bottom, var(--card), var(--night)); padding: 2rem; box-shadow: 0 40px 120px -40px rgba(139, 92, 246, .5); }
+@media (min-width: 48rem) { .calc-card { padding: 3rem; } }
+.rows { display: flex; flex-direction: column; gap: .75rem; }
+.row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1rem;
+  border-radius: 1rem; border: 1px solid var(--hairline); background: var(--ink); padding: .875rem 1.125rem;
+  transition: border-color .25s, background-color .25s, opacity .25s, box-shadow .25s;
+}
+.row.on { border-color: rgba(255, 92, 56, .5); background: rgba(255, 92, 56, .06); box-shadow: 0 0 0 1px rgba(255, 92, 56, .08), 0 10px 30px -18px rgba(255, 92, 56, .7); }
+.row:not(.on) { opacity: .6; }
+.row.flash { animation: flash .6s ease-out; }
+.chk { position: relative; display: flex; cursor: pointer; }
+.chk input { position: absolute; opacity: 0; width: 1.25rem; height: 1.25rem; cursor: pointer; }
+.chk .box { display: flex; width: 1.25rem; height: 1.25rem; align-items: center; justify-content: center; border-radius: .25rem; border: 1px solid var(--hairline); background: var(--ink); transition: background-color .15s, border-color .15s, box-shadow .15s; }
+.chk .box svg { width: 100%; height: 100%; padding: 2px; opacity: 0; transform: scale(.4); transition: opacity .15s, transform .25s var(--ease-out); }
+.chk input:checked + .box { border-color: var(--flame); background: var(--flame); box-shadow: 0 0 12px rgba(255, 92, 56, .6); }
+.chk input:checked + .box svg { opacity: 1; transform: none; }
+.row-name { cursor: pointer; min-width: 0; }
+.row-name b { display: block; font-weight: 700; font-size: 1rem; line-height: 1.4; }
+.row-name small { display: block; font-size: .8125rem; color: var(--muted); }
+.qty { display: flex; align-items: center; gap: .5rem; }
+.qty button { display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid var(--hairline); background: var(--card); font-size: 1.125rem; font-weight: 700; line-height: 1; cursor: pointer; transition: border-color .15s, background-color .15s, transform .1s; }
+.qty button:active { transform: scale(.9); }
+@media (hover: hover) { .qty button:hover { border-color: rgba(255, 92, 56, .5); background: rgba(255, 92, 56, .1); } }
+.qty output { min-width: 2ch; text-align: center; font-weight: 800; }
+@media (max-width: 39.99rem) {
+  .calc-card { padding: 1.25rem .875rem; border-radius: 2rem; }
+  .row { gap: .625rem; padding: .75rem; }
+  .row-name b { font-size: .9375rem; }
+  .qty { gap: .375rem; }
+  .qty button { width: 1.875rem; height: 1.875rem; }
+}
+.totals { margin-top: 2rem; display: grid; gap: 1rem; }
+@media (min-width: 40rem) { .totals { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tot { border-radius: 1.5rem; padding: 1.5rem; display: flex; flex-direction: column; gap: .25rem; text-align: center; }
+.tot .k { font-size: .875rem; font-weight: 700; letter-spacing: .1em; color: var(--muted); }
+.tot .v { font-size: 2.25rem; line-height: 1.1; font-weight: 900; }
+@media (min-width: 48rem) { .tot .v { font-size: 3rem; } }
+.tot.out { border: 1px solid var(--hairline); background: var(--ink); }
+.tot.in { background: linear-gradient(to bottom right, var(--card), var(--night)) padding-box, var(--beam) border-box; box-shadow: 0 20px 70px -30px rgba(255, 92, 56, .55); }
+.bars { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+.bar { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: center; gap: .75rem; font-size: .875rem; font-weight: 700; color: var(--muted); }
+.track { height: .75rem; border-radius: 999px; background: rgba(43, 39, 64, .7); overflow: hidden; }
+.track i { display: block; height: 100%; width: 0; border-radius: inherit; background: rgba(160, 157, 173, .55); transition: width .8s var(--ease-out); }
+.track i.in { background: var(--grad); box-shadow: 0 0 14px rgba(255, 92, 56, .7); }
+.verdict { margin-top: 1.5rem; text-align: center; font-size: 1.25rem; font-weight: 800; line-height: 1.4; }
+@media (min-width: 48rem) { .verdict { font-size: 1.5rem; } }
+.verdict em { font-style: normal; color: var(--flame-soft); }
+
+/* ---------- price ---------- */
+.price-box { display: flex; flex-direction: column; align-items: center; gap: 1.75rem; text-align: center; }
+.price-old { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.price-old .k { font-size: .875rem; font-weight: 700; letter-spacing: .1em; color: var(--muted); }
+.strike { position: relative; display: inline-block; padding: .25rem 1.25rem; }
+.strike > span { font-size: 3rem; line-height: 1; font-weight: 900; color: rgba(245, 243, 240, .55); }
+@media (min-width: 48rem) { .strike > span { font-size: 3.75rem; } }
+.strike svg { position: absolute; inset: 0; margin: auto; height: 100%; width: 10rem; }
+@media (min-width: 48rem) { .strike svg { width: 12rem; } }
+.js .strike line { stroke-dasharray: 130; stroke-dashoffset: 130; transition: stroke-dashoffset .5s cubic-bezier(.16, 1, .3, 1) .5s; }
+.js .strike line + line { transition-delay: .75s; }
+.js .revealed .strike line { stroke-dashoffset: 0; }
+.special { width: 100%; max-width: 30rem; border-radius: 1.5rem; padding: 1.5rem 2rem; background: linear-gradient(rgba(255, 92, 56, .1), rgba(255, 92, 56, .1)) padding-box, linear-gradient(var(--ink), var(--ink)) padding-box, var(--beam) border-box; box-shadow: 0 20px 70px -30px rgba(255, 92, 56, .55); }
+.special .k { font-size: 1.375rem; font-weight: 800; color: var(--flame-soft); }
+@media (min-width: 48rem) { .special .k { font-size: 1.75rem; } }
+.special .big { display: block; margin-top: .25rem; font-size: 4.5rem; line-height: 1.05; font-weight: 900; }
+@media (min-width: 48rem) { .special .big { font-size: 6rem; } }
+.special .big.glitch { animation: gradient-pan 6s linear infinite, glitch .5s steps(1, end) 1; }
+.special p { margin-top: .5rem; font-size: 1.0625rem; line-height: 1.5; color: var(--paper); font-weight: 700; }
+.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: .625rem; max-width: 40rem; }
+.tags span { border-radius: 999px; border: 1px solid var(--hairline); background: var(--card); padding: .5rem 1rem; font-size: .875rem; font-weight: 700; color: var(--muted); }
+.price-box .btn { width: 100%; max-width: 30rem; padding-block: 1.25rem; font-size: 1.25rem; }
+@media (max-width: 39.99rem) { .price-box .btn { font-size: 1.125rem; padding-inline: 1.25rem; } }
+.wa-num { font-size: .875rem; color: var(--muted); }
+
+footer { border-top: 1px solid var(--hairline); background: var(--ink); }
+.foot { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding-block: 2.5rem 7rem; text-align: center; font-size: .875rem; line-height: 1.6; color: var(--muted); }
+.foot-logo { display: inline-flex; flex-direction: column; align-items: center; gap: .5rem; direction: ltr; }
+.foot-logo .a { font-size: .65rem; font-weight: 500; letter-spacing: .5em; color: var(--muted); line-height: 1; }
+.foot-logo .b { margin-top: .25rem; font-size: 1.5rem; font-weight: 900; letter-spacing: -.025em; line-height: 1; }
+
+.sticky {
+  position: fixed; inset-inline: 0; bottom: 0; z-index: 50; display: flex; justify-content: center;
+  padding: 0 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  transition: transform .5s cubic-bezier(.4, 0, .2, 1), opacity .5s cubic-bezier(.4, 0, .2, 1);
+  transform: translateY(6rem); opacity: 0; pointer-events: none;
+}
+.sticky.show { transform: none; opacity: 1; pointer-events: auto; }
+.sticky .btn { width: 100%; max-width: 28rem; padding: 1rem 2rem; box-shadow: 0 18px 60px -8px rgba(255, 92, 56, .75), inset 0 1px 0 rgba(255, 255, 255, .25); }
+.sticky .btn svg { width: 1.25rem; height: 1.25rem; }
+
+/* small phones (320–360px) */
+@media (max-width: 22.5rem) {
+  .wrap { padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+  .h1 { font-size: 2.375rem; }
+  .pill { font-size: .75rem; padding: .5rem .875rem; gap: .5rem; }
+  .btn { padding: .9375rem 1.25rem; font-size: 1rem; }
+  .price-box .btn { font-size: 1rem; padding-inline: 1rem; }
+  .console { font-size: .75rem; padding: .5rem .75rem; }
+  .list { padding: .25rem .875rem; }
+  .li { gap: .5rem; }
+  .li > span { font-size: .8125rem; gap: .5rem; }
+  .li b { font-size: .9375rem; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-22px) rotate(2deg); } }
+@keyframes pulse-glow { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes gradient-pan { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+@keyframes marquee { 0% { transform: translate(-50%); } 100% { transform: translate(0); } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes sweep { 0%, 55% { transform: translateX(130%); } 100% { transform: translateX(-130%); } }
+@keyframes beam { to { --a: 360deg; } }
+@keyframes ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
+@keyframes grid-drift { to { background-position: 52px 52px, 52px 52px; } }
+@keyframes floor { to { background-position: 0 64px, 0 64px; } }
+@keyframes scan-in { to { clip-path: inset(0 0 0 0); } }
+@keyframes scan-bar { 0% { right: 0; opacity: 1; } 88% { opacity: 1; } 100% { right: 100%; opacity: 0; } }
+@keyframes scan-down { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@keyframes flash { 0% { box-shadow: 0 0 0 0 rgba(255, 92, 56, .55); } 100% { box-shadow: 0 0 0 12px rgba(255, 92, 56, 0); } }
+@keyframes glitch {
+  0% { transform: translate(-4px, 1px) skewX(-10deg); filter: hue-rotate(50deg); }
+  20% { transform: translate(4px, -1px) skewX(8deg); filter: none; }
+  40% { transform: translate(-2px, 0); filter: hue-rotate(-40deg) brightness(1.4); }
+  60% { transform: translate(2px, 1px) skewX(-4deg); filter: none; }
+  80% { transform: translate(-1px, 0); }
+  100% { transform: none; filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal, .js .stg > * { opacity: 1; transition: none; transform: none; filter: none; }
+  .js .h1 .ln-t { clip-path: none; }
+  .js .strike line { stroke-dashoffset: 0; transition: none; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="gear" viewBox="0 0 48 48" fill="none">
+      <g stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="5"/>
+        <line x1="40" y1="24" x2="45" y2="24"/><line x1="35.31" y1="35.31" x2="38.85" y2="38.85"/>
+        <line x1="24" y1="40" x2="24" y2="45"/><line x1="12.69" y1="35.31" x2="9.15" y2="38.85"/>
+        <line x1="8" y1="24" x2="3" y2="24"/><line x1="12.69" y1="12.69" x2="9.15" y2="9.15"/>
+        <line x1="24" y1="8" x2="24" y2="3"/><line x1="35.31" y1="12.69" x2="38.85" y2="9.15"/>
+      </g>
+    </symbol>
+    <symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z" fill="currentColor"/></symbol>
+    <symbol id="chat" viewBox="0 0 24 24" fill="none"><path d="M4.5 19.5 5.7 16A8 8 0 1 1 8.4 18.5l-3.9 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9.5c.3 1.9 1.6 3.4 3.6 4.2l1.3-1.1 1.7.8-.4 1.6c-3.3.2-6.5-2.6-6.9-5.9l1.5-.6.9 1.6-1.7-.6Z" fill="currentColor"/></symbol>
+    <linearGradient id="cm-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff5c38"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient>
+  </defs>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="sec hero-sec" id="top">
+  <img class="bgimg" style="opacity:.3" src="https://ai.yossilevi.co.il/assets/launch-city-Br3__wiy.png" alt="" onerror="this.remove()">
+  <div class="shade" style="background:linear-gradient(to bottom, rgba(10,10,15,.75), rgba(10,10,15,.55), var(--ink))" aria-hidden="true"></div>
+  <div class="glow" style="top:-6rem;inset-inline-start:-6rem;width:24rem;height:24rem;background:rgba(255,92,56,.25)" aria-hidden="true"></div>
+  <div class="glow" style="top:33%;inset-inline-end:-8rem;width:28rem;height:28rem;background:rgba(139,92,246,.25)" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
+  <canvas id="net" aria-hidden="true"></canvas>
+
+  <div class="wrap w6" style="z-index:10">
+    <nav>
+      <span class="logo" aria-label="קלוד משין">
+        <span class="logo-mark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 3 5.5 14.5H11L9.5 21 17.5 9.5H12L13 3Z" fill="#f5f3f0"/></svg></span>
+        <span class="logo-words"><span class="a">CLAUDE</span><span class="b">MACHINE</span></span>
+      </span>
+      <a class="ghost" href="https://wa.me/972506829007?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%A8%D7%99%D7%99%D7%9F%20%D7%9E%D7%A7%D7%95%D7%9D%20%D7%91%D7%A1%D7%93%D7%A0%D7%AA%20%D7%A7%D7%9C%D7%95%D7%93%20%D7%9E%D7%A9%D7%99%D7%9F%20%D7%91-8.11" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#chat"/></svg>וואטסאפ</a>
+    </nav>
+  </div>
+
+  <div class="wrap w5">
+    <div class="hero">
+      <span class="pill"><span class="live" aria-hidden="true"></span>יום ראשון, 8.11 · עפולה · 15 מקומות</span>
+      <h1 class="h1">
+        <span class="ln"><span class="ln-t">מוצר שלם ביום אחד.</span></span>
+        <span class="ln"><span class="ln-t text-machine">במקום אלפי שקלים לספקים.</span></span>
+      </h1>
+      <p class="lead">דף נחיתה, אוטומציה או דשבורד שאתה בונה בעצמך, באוויר עוד באותו ערב. ואת הבא אתה כבר בונה לבד.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="https://wa.me/972506829007?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%A8%D7%99%D7%99%D7%9F%20%D7%9E%D7%A7%D7%95%D7%9D%20%D7%91%D7%A1%D7%93%D7%A0%D7%AA%20%D7%A7%D7%9C%D7%95%D7%93%20%D7%9E%D7%A9%D7%99%D7%9F%20%D7%91-8.11" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#chat"/></svg>שריינו מקום בוואטסאפ</a>
+        <a class="textlink" href="#vs">מה מקבלים ביום אחד? ↓</a>
+      </div>
+      <div class="console" aria-hidden="true"><span class="pr">&gt;</span><span id="typer"><span class="ok">✓</span> מוכן. המוצר שלך באוויר.</span><span class="caret"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MARQUEE ============ -->
+<section class="marquee" aria-label="מחירי שוק">
+  <div class="marquee-track">
+    <span class="chip"><i></i>דף נחיתה <em><span class="n">1,500–5,000</span> ₪</em></span>
+    <span class="chip"><i></i>תיקון קטן באתר <em><span class="n">250–800</span> ₪</em></span>
+    <span class="chip"><i></i>אתר תדמית <em><span class="n">3,500–12,000</span> ₪</em></span>
+    <span class="chip"><i></i>אוטומציה <em><span class="n">1,500–4,000</span> ₪</em></span>
+    <span class="chip"><i></i>דשבורד <em><span class="n">2,500–8,000</span> ₪</em></span>
+    <span class="chip"><i></i>בוט לוואטסאפ <em><span class="n">2,500–8,000</span> ₪</em></span>
+    <span class="chip"><i></i>מחשבון לאתר <em><span class="n">1,000–3,000</span> ₪</em></span>
+    <span class="chip"><i></i>שעת מתכנת <em><span class="n">200–400</span> ₪</em></span>
+    <span class="chip"><i></i>רילס אצל עורך וידאו <em><span class="n">150–400</span> ₪</em></span>
+    <!-- second copy so the loop is seamless -->
+    <span class="chip" aria-hidden="true"><i></i>דף נחיתה <em><span class="n">1,500–5,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>תיקון קטן באתר <em><span class="n">250–800</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>אתר תדמית <em><span class="n">3,500–12,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>אוטומציה <em><span class="n">1,500–4,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>דשבורד <em><span class="n">2,500–8,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>בוט לוואטסאפ <em><span class="n">2,500–8,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>מחשבון לאתר <em><span class="n">1,000–3,000</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>שעת מתכנת <em><span class="n">200–400</span> ₪</em></span>
+    <span class="chip" aria-hidden="true"><i></i>רילס אצל עורך וידאו <em><span class="n">150–400</span> ₪</em></span>
+  </div>
+</section>
+
+<!-- ============ OUTSIDE VS ONE DAY ============ -->
+<section class="sec bg-ink" id="vs">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="glow" style="top:20%;inset-inline-start:-10rem;width:22rem;height:22rem;background:rgba(255,92,56,.12)" aria-hidden="true"></div>
+  <div class="wrap w5 sec-pad">
+    <div class="head reveal">
+      <span class="eyebrow volt">אותה מטרה, שתי דרכים</span>
+      <h2 class="h2">מה מקבלים<br><span class="text-machine">ביום אחד בסדנה?</span></h2>
+    </div>
+    <div class="vs">
+      <div class="side spot reveal d1">
+        <span class="tag">להזמין מבחוץ</span>
+        <ul class="stg">
+          <li><i class="x"></i><span>דף נחיתה אחד: <b><span class="n">1,500–5,000</span> ₪</b></span></li>
+          <li><i class="x"></i><span>כל תיקון קטן: <b><span class="n">250–800</span> ₪</b></span></li>
+          <li><i class="x"></i><span>מחכים שבוע-שבועיים</span></li>
+          <li><i class="x"></i><span>הקוד והידע נשארים אצל הספק</span></li>
+          <li><i class="x"></i><span>הפרויקט הבא? משלמים שוב</span></li>
+        </ul>
+      </div>
+      <div class="side hot beam beam-c spot reveal d2">
+        <span class="tag">יום אחד בסדנה</span>
+        <ul class="stg">
+          <li><i class="v"></i><span><b>מוצר שלם באוויר</b> עוד באותו ערב</span></li>
+          <li><i class="v"></i><span>תיקונים ושינויים: <b>אתה עושה, בחינם</b></span></li>
+          <li><i class="v"></i><span>הקוד והחשבונות <b>שלך</b></span></li>
+          <li><i class="v"></i><span>קלוד קוד מותקן על המחשב שלך + השיטה כתובה</span></li>
+          <li><i class="v"></i><span>את הפרויקט הבא <b>אתה בונה לבד</b></span></li>
+        </ul>
+        <p class="cost"><span class="n">990</span> ₪, פעם אחת</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICES ============ -->
+<section class="sec bg-ink" id="prices">
+  <img class="bgimg" style="opacity:.22" src="https://ai.yossilevi.co.il/assets/pexels-desk-CvIWrLEZ.jpg" alt="" onerror="this.remove()">
+  <div class="shade" style="background:linear-gradient(to bottom, var(--ink), rgba(10,10,15,.8), var(--ink))" aria-hidden="true"></div>
+  <div class="deco" aria-hidden="true">
+    <svg width="90" height="90" class="spin" style="inset-inline-start:-1.5rem;top:4rem;color:rgba(255,92,56,.1)"><use href="#gear"/></svg>
+    <svg width="120" height="120" class="spin rev" style="inset-inline-end:-2.5rem;bottom:2.5rem;color:rgba(139,92,246,.08)"><use href="#gear"/></svg>
+    <svg width="34" height="34" class="float" style="inset-inline-start:25%;top:2.5rem;color:rgba(139,92,246,.15)"><use href="#bolt"/></svg>
+    <svg width="22" height="22" class="float-slow" style="inset-inline-end:25%;bottom:5rem;color:rgba(255,92,56,.15)"><use href="#bolt"/></svg>
+  </div>
+
+  <div class="wrap w3 sec-pad">
+    <div class="head reveal">
+      <span class="eyebrow">מחירון ספקים</span>
+      <h2 class="h2">ככה זה עולה<br><span class="text-machine">כשמזמינים מבחוץ</span></h2>
+    </div>
+    <div class="list stg spot reveal d1" id="list">
+      <div class="li"><span>דף נחיתה</span><b><span class="n">1,500–5,000</span> ₪</b></div>
+      <div class="li"><span>תיקון קטן באתר</span><b><span class="n">250–800</span> ₪</b></div>
+      <div class="li"><span>אתר תדמית</span><b><span class="n">3,500–12,000</span> ₪</b></div>
+      <div class="li"><span>אוטומציה</span><b><span class="n">1,500–4,000</span> ₪</b></div>
+      <div class="li"><span>דשבורד / דוח</span><b><span class="n">2,500–8,000</span> ₪</b></div>
+      <div class="li"><span>בוט לוואטסאפ</span><b><span class="n">2,500–8,000</span> ₪</b></div>
+      <div class="li"><span>מחשבון לאתר</span><b><span class="n">1,000–3,000</span> ₪</b></div>
+      <div class="li"><span>שעת מתכנת</span><b><span class="n">200–400</span> ₪</b></div>
+      <div class="li"><span>רילס אצל עורך וידאו *</span><b><span class="n">150–400</span> ₪</b></div>
+    </div>
+    <p class="note reveal">מחירי פרילנסרים בישראל, לפני מע"מ · * עריכת וידאו אינה חלק מהסדנה</p>
+  </div>
+</section>
+
+<!-- ============ CALCULATOR ============ -->
+<section class="sec bg-night" id="calc">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="glow" style="top:-6rem;inset-inline-start:33%;width:18rem;height:18rem;background:rgba(139,92,246,.15)" aria-hidden="true"></div>
+  <div class="glow" style="bottom:-6rem;inset-inline-end:25%;width:18rem;height:18rem;background:rgba(255,92,56,.15)" aria-hidden="true"></div>
+  <div class="wrap w3 sec-pad">
+    <div class="head reveal">
+      <span class="eyebrow volt">המחשבון</span>
+      <h2 class="h2">כמה שילמת<br><span class="text-machine">בשנה האחרונה?</span></h2>
+    </div>
+
+    <div class="calc-card spot reveal">
+      <div class="rows" id="rows"></div>
+      <div class="totals">
+        <div class="tot out"><span class="k">שילמת לספקים בשנה</span><span class="v"><span class="n" id="tOut">10,000</span> ₪</span></div>
+        <div class="tot in beam beam-c"><span class="k">הסדנה, פעם אחת</span><span class="v text-machine"><span class="n">990</span> ₪</span></div>
+      </div>
+      <div class="bars" aria-hidden="true">
+        <div class="bar"><span>ספקים</span><span class="track"><i id="bOut" style="width:100%"></i></span></div>
+        <div class="bar"><span>הסדנה</span><span class="track"><i class="in" id="bIn" style="width:10%"></i></span></div>
+      </div>
+      <p class="verdict" id="verdict" aria-live="polite">שילמת <em>פי <span class="n">10</span></em> ממחיר הסדנה.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICE ============ -->
+<section class="sec bg-ink" id="price">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="glow" style="top:-6rem;inset-inline-start:33%;width:18rem;height:18rem;background:rgba(139,92,246,.15)" aria-hidden="true"></div>
+  <div class="glow" style="bottom:-8rem;left:50%;translate:-50% 0;width:42rem;height:24rem;background:rgba(255,92,56,.2)" aria-hidden="true"></div>
+  <div class="deco" aria-hidden="true">
+    <svg width="90" height="90" class="spin" style="inset-inline-end:-1.5rem;top:5rem;color:rgba(255,92,56,.1)"><use href="#gear"/></svg>
+    <svg width="26" height="26" class="float" style="inset-inline-start:3rem;bottom:33%;color:rgba(255,92,56,.1);animation-delay:1.5s"><use href="#bolt"/></svg>
+  </div>
+  <div class="wrap w3 sec-pad">
+    <div class="head reveal">
+      <span class="eyebrow">ובסדנה</span>
+      <h2 class="h2">מוצר שלם ביום אחד,<br><span class="text-machine">והיכולת לבנות את הבא לבד</span></h2>
+    </div>
+
+    <div class="price-box reveal d1" id="priceBox">
+      <div class="price-old">
+        <span class="k">מחיר הסדנה</span>
+        <div class="strike">
+          <span><span class="n">2,000</span> ₪</span>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="10" y1="8" x2="90" y2="92" stroke="#ff3b30" stroke-width="7" stroke-linecap="round" vector-effect="non-scaling-stroke" pathLength="130"/><line x1="90" y1="8" x2="10" y2="92" stroke="#ff3b30" stroke-width="7" stroke-linecap="round" vector-effect="non-scaling-stroke" pathLength="130"/></svg>
+        </div>
+      </div>
+      <div class="special beam beam-c">
+        <p class="k">מחיר מיוחד למחזור נובמבר</p>
+        <span class="big text-machine" id="big"><span class="n" id="bigN">990</span> ₪</span>
+        <p>פחות ממחיר של דף נחיתה אחד אצל פרילנסר</p>
+      </div>
+      <div class="tags stg">
+        <span>מערכת חיה באוויר</span>
+        <span>הקוד והחשבונות שלך</span>
+        <span>בלי ידע מוקדם</span>
+        <span>יום מלא, פנים אל פנים</span>
+      </div>
+      <a class="btn" href="https://wa.me/972506829007?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%A8%D7%99%D7%99%D7%9F%20%D7%9E%D7%A7%D7%95%D7%9D%20%D7%91%D7%A1%D7%93%D7%A0%D7%AA%20%D7%A7%D7%9C%D7%95%D7%93%20%D7%9E%D7%A9%D7%99%D7%9F%20%D7%91-8.11" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#chat"/></svg>שריינו לי מקום בוואטסאפ</a>
+      <span class="wa-num">וואטסאפ: <span class="n">050-6829007</span></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap w5 foot">
+    <span class="foot-logo">
+      <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true" class="spin" style="animation-duration:40s">
+        <g stroke="url(#cm-grad)" stroke-width="3" stroke-linecap="round">
+          <circle cx="24" cy="24" r="15"/>
+          <line x1="41.5" y1="24" x2="45.5" y2="24"/><line x1="36.37" y1="36.37" x2="39.2" y2="39.2"/>
+          <line x1="24" y1="41.5" x2="24" y2="45.5"/><line x1="11.63" y1="36.37" x2="8.8" y2="39.2"/>
+          <line x1="6.5" y1="24" x2="2.5" y2="24"/><line x1="11.63" y1="11.63" x2="8.8" y2="8.8"/>
+          <line x1="24" y1="6.5" x2="24" y2="2.5"/><line x1="36.37" y1="11.63" x2="39.2" y2="8.8"/>
+        </g>
+        <path d="M26 13.5 18.5 25h5L21.5 34.5 30 22.5h-5.5L26 13.5Z" fill="url(#cm-grad)"/>
+      </svg>
+      <span class="a">CLAUDE</span><span class="b text-machine">MACHINE</span>
+    </span>
+    <span>סדנה פרונטלית עם יוסי לוי · המחירים בעמוד הם הערכה ואינם הצעת מחיר</span>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="https://wa.me/972506829007?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%A8%D7%99%D7%99%D7%9F%20%D7%9E%D7%A7%D7%95%D7%9D%20%D7%91%D7%A1%D7%93%D7%A0%D7%AA%20%D7%A7%D7%9C%D7%95%D7%93%20%D7%9E%D7%A9%D7%99%D7%9F%20%D7%91-8.11" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#chat"/></svg>שריינו מקום בוואטסאפ</a></div>
+
+<script>
+(function () {
+  window.__machineReady = true;
+  var PRICE = 990;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fmt = function (n) { return Math.round(n).toLocaleString("en-US"); };
+
+  /* animate 0..1 with ease-out; a timer guarantees the final frame even when animation frames are paused */
+  function tween(dur, fn, done) {
+    if (reduce) { fn(1); if (done) done(); return; }
+    var t0 = null, fin = false;
+    function end() { if (fin) return; fin = true; fn(1); if (done) done(); }
+    function step(t) {
+      if (fin) return;
+      if (t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      fn(1 - Math.pow(1 - p, 3));
+      if (p < 1) requestAnimationFrame(step); else end();
+    }
+    requestAnimationFrame(step);
+    setTimeout(end, dur + 150);
+  }
+
+  /* stagger index for cascading children */
+  document.querySelectorAll(".stg").forEach(function (g) {
+    Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty("--i", i); });
+  });
+
+  /* headline laser scan */
+  document.querySelectorAll(".h1 .ln").forEach(function (ln, i) {
+    setTimeout(function () { ln.classList.add("go"); }, reduce ? 0 : 250 + i * 650);
+  });
+
+  /* price list numbers count up from zero */
+  function runList() {
+    document.querySelectorAll("#list .li b .n").forEach(function (el, i) {
+      var parts = el.textContent.split("–").map(function (s) { return Number(s.replace(/,/g, "")); });
+      el.textContent = "0–0";
+      setTimeout(function () {
+        tween(900, function (e) { el.textContent = fmt(parts[0] * e) + "–" + fmt(parts[1] * e); });
+      }, reduce ? 0 : 300 + i * 75);
+    });
+  }
+
+  /* 2,000 drops to 990 after the strike-through, then a short glitch */
+  function runPrice() {
+    var n = document.getElementById("bigN"), big = document.getElementById("big");
+    if (reduce) return;
+    n.textContent = "2,000";
+    setTimeout(function () {
+      tween(1100, function (e) { n.textContent = fmt(2000 - (2000 - PRICE) * e); }, function () {
+        big.classList.remove("glitch"); void big.offsetWidth; big.classList.add("glitch");
+      });
+    }, 1150);
+  }
+
+  /* reveal on scroll, same settings as the workshop page */
+  var hooks = { list: runList, priceBox: runPrice };
+  function revealed(el) {
+    el.classList.add("revealed");
+    if (el.id && hooks[el.id]) { hooks[el.id](); hooks[el.id] = null; }
+  }
+  var reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { revealed(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(revealed);
+  }
+  /* backup for in-app browsers that skip observer callbacks: reveal whatever has entered the screen */
+  function sweepReveals() {
+    var vh = window.innerHeight, left = 0;
+    reveals.forEach(function (el) {
+      if (el.classList.contains("revealed")) return;
+      left++;
+      var r = el.getBoundingClientRect();
+      if (r.top < vh * 0.88 && r.bottom > 0) revealed(el);
+    });
+    return left;
+  }
+
+  /* console typing in the hero */
+  var typer = document.getElementById("typer");
+  var LINES = ["קלוד, תבנה לי דף נחיתה לעסק", "בונה עיצוב... מחבר לידים...", "מעלה לאוויר...", "✓ מוכן. המוצר שלך באוויר."];
+  if (!reduce) {
+    (function loop(li) {
+      var text = LINES[li], k = 0;
+      (function type() {
+        k++;
+        var shown = text.slice(0, k);
+        typer.innerHTML = shown.charAt(0) === "✓" ? '<span class="ok">✓</span>' + shown.slice(1) : shown;
+        if (k < text.length) return setTimeout(type, 38 + Math.random() * 40);
+        setTimeout(function () {
+          (function del() {
+            k = Math.max(0, k - 2);
+            var s = text.slice(0, k);
+            typer.innerHTML = s.charAt(0) === "✓" ? '<span class="ok">✓</span>' + s.slice(1) : s;
+            if (k > 0) return setTimeout(del, 16);
+            loop((li + 1) % LINES.length);
+          })();
+        }, li === LINES.length - 1 ? 2600 : 1100);
+      })();
+    })(0);
+  }
+
+  /* neural network in the hero */
+  (function () {
+    var canvas = document.getElementById("net");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    var hero = document.getElementById("top");
+    var W = 0, H = 0, nodes = [], packets = [], mouse = { x: -9999, y: -9999 }, running = false, last = 0, spawn = 0;
+    var COL = [[255, 138, 92], [183, 156, 255]], LINK = 135;
+    function make() { return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3, r: Math.random() * 1.5 + .7, c: Math.random() < .55 ? 0 : 1 }; }
+    function size() {
+      var r = hero.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = r.width; H = r.height;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var target = Math.round(Math.min(105, Math.max(34, W * H / 12000)));
+      while (nodes.length < target) nodes.push(make());
+      nodes.length = target;
+      nodes.forEach(function (p) { if (p.x > W) p.x = Math.random() * W; if (p.y > H) p.y = Math.random() * H; });
+    }
+    function rgba(c, a) { return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
+    function draw(dt) {
+      ctx.clearRect(0, 0, W, H);
+      var i, j, a, b, dx, dy, d;
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        dx = mouse.x - a.x; dy = mouse.y - a.y; d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 180) { a.vx += dx / d * .012; a.vy += dy / d * .012; }
+        a.vx *= .99; a.vy *= .99;
+        var sp = Math.sqrt(a.vx * a.vx + a.vy * a.vy);
+        if (sp < .12) { a.vx += (Math.random() - .5) * .04; a.vy += (Math.random() - .5) * .04; }
+        if (sp > .9) { a.vx *= .9; a.vy *= .9; }
+        a.x += a.vx * dt * .06; a.y += a.vy * dt * .06;
+        if (a.x < -20) a.x = W + 20; if (a.x > W + 20) a.x = -20;
+        if (a.y < -20) a.y = H + 20; if (a.y > H + 20) a.y = -20;
+      }
+      ctx.lineWidth = .7;
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        for (j = i + 1; j < nodes.length; j++) {
+          b = nodes[j]; dx = a.x - b.x; dy = a.y - b.y;
+          if (Math.abs(dx) > LINK || Math.abs(dy) > LINK) continue;
+          d = Math.sqrt(dx * dx + dy * dy);
+          if (d < LINK) {
+            ctx.strokeStyle = rgba(COL[a.c === b.c ? a.c : (i % 2)], ((1 - d / LINK) * .32).toFixed(3));
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        dx = mouse.x - a.x; dy = mouse.y - a.y; d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 190) {
+          ctx.strokeStyle = rgba(COL[0], ((1 - d / 190) * .55).toFixed(3));
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+      }
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        ctx.fillStyle = rgba(COL[a.c], .14); ctx.beginPath(); ctx.arc(a.x, a.y, a.r * 3.2, 0, 6.283); ctx.fill();
+        ctx.fillStyle = rgba(COL[a.c], .9); ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.283); ctx.fill();
+      }
+      /* data packets travelling along links */
+      spawn += dt;
+      if (spawn > 260 && packets.length < 14) {
+        spawn = 0;
+        a = nodes[(Math.random() * nodes.length) | 0];
+        for (j = 0; j < nodes.length; j++) {
+          b = nodes[(Math.random() * nodes.length) | 0];
+          dx = a.x - b.x; dy = a.y - b.y;
+          if (b !== a && dx * dx + dy * dy < LINK * LINK * .8) { packets.push({ a: a, b: b, t: 0 }); break; }
+        }
+      }
+      for (i = packets.length - 1; i >= 0; i--) {
+        var p = packets[i]; p.t += dt / 650;
+        dx = p.a.x - p.b.x; dy = p.a.y - p.b.y;
+        if (p.t >= 1 || dx * dx + dy * dy > LINK * LINK * 1.4) { packets.splice(i, 1); continue; }
+        var x = p.a.x + (p.b.x - p.a.x) * p.t, y = p.a.y + (p.b.y - p.a.y) * p.t;
+        ctx.fillStyle = "rgba(255,170,130,.25)"; ctx.beginPath(); ctx.arc(x, y, 6, 0, 6.283); ctx.fill();
+        ctx.fillStyle = "rgba(255,236,224,.95)"; ctx.beginPath(); ctx.arc(x, y, 1.9, 0, 6.283); ctx.fill();
+      }
+    }
+    function frame(t) {
+      if (!running) return;
+      var dt = last ? Math.min(50, t - last) : 16; last = t;
+      draw(dt);
+      requestAnimationFrame(frame);
+    }
+    function start() { if (running || reduce) return; running = true; last = 0; requestAnimationFrame(frame); }
+    function stop() { running = false; }
+    size();
+    if (reduce) { draw(16); return; }
+    var heroOn = true;
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { heroOn = e[0].isIntersecting; if (heroOn && !document.hidden) start(); else stop(); }).observe(hero);
+    document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else if (heroOn) start(); });
+    var rt = null;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(size, 150); });
+    hero.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "touch") return;
+      var r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    hero.addEventListener("pointerleave", function () { mouse.x = mouse.y = -9999; });
+    start();
+  })();
+
+  /* pointer spotlight on cards */
+  document.querySelectorAll(".spot").forEach(function (el) {
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      el.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  /* calculator */
+  var ITEMS = [
+    { id: "lp",   name: "דפי נחיתה",           unit: 2500, qty: 2,  on: true  },
+    { id: "fix",  name: "תיקונים קטנים באתר",  unit: 300,  qty: 10, on: true  },
+    { id: "auto", name: "אוטומציות",           unit: 2000, qty: 1,  on: true  },
+    { id: "dash", name: "דשבורד / דוח",        unit: 3000, qty: 1,  on: false },
+    { id: "site", name: "אתר תדמית",           unit: 5000, qty: 1,  on: false },
+    { id: "bot",  name: "בוט / מערכת הרשמה",    unit: 3000, qty: 1,  on: false },
+    { id: "calc", name: "מחשבון / טופס חכם",    unit: 1500, qty: 1,  on: false },
+    { id: "vid",  name: "רילסים אצל עורך *",    unit: 200,  qty: 24, on: false }
+  ];
+  var rows = document.getElementById("rows");
+  var check = '<svg viewBox="0 0 24 24" fill="none" stroke="#f5f3f0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>';
+  function flash(row) { row.classList.remove("flash"); void row.offsetWidth; row.classList.add("flash"); }
+
+  ITEMS.forEach(function (it) {
+    var row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML =
+      '<label class="chk"><input type="checkbox" id="c-' + it.id + '"' + (it.on ? " checked" : "") + '><span class="box">' + check + "</span></label>" +
+      '<label class="row-name" for="c-' + it.id + '"><b>' + it.name + '</b><small>כ-<span class="n">' + fmt(it.unit) + '</span> ₪ ליחידה</small></label>' +
+      '<div class="qty"><button type="button" data-d="-1" aria-label="פחות ' + it.name + '">−</button><output class="n" id="q-' + it.id + '">' + it.qty + '</output><button type="button" data-d="1" aria-label="עוד ' + it.name + '">+</button></div>';
+    var box = row.querySelector("input");
+    box.addEventListener("change", function () { it.on = box.checked; flash(row); render(); });
+    row.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        it.qty = Math.max(0, Math.min(99, it.qty + Number(b.getAttribute("data-d"))));
+        it.on = it.qty > 0;
+        box.checked = it.on;
+        flash(row);
+        render();
+      });
+    });
+    it.row = row;
+    rows.appendChild(row);
+  });
+
+  var outEl = document.getElementById("tOut");
+  var shown = 10000, job = 0;
+  function countTo(target) {
+    var from = shown, me = ++job;
+    tween(650, function (e) { if (me !== job) return; shown = from + (target - from) * e; outEl.textContent = fmt(shown); });
+  }
+
+  function render() {
+    var total = 0;
+    ITEMS.forEach(function (it) {
+      document.getElementById("q-" + it.id).textContent = it.qty;
+      it.row.classList.toggle("on", it.on);
+      if (it.on) total += it.unit * it.qty;
+    });
+    countTo(total);
+    var top = Math.max(total, PRICE, 1);
+    document.getElementById("bOut").style.width = (total / top * 100) + "%";
+    document.getElementById("bIn").style.width = total === 0 ? "0%" : Math.max(2, PRICE / top * 100) + "%";
+    var v = document.getElementById("verdict");
+    if (total === 0) {
+      v.innerHTML = "סמן לפחות שירות אחד.";
+    } else if (total <= PRICE) {
+      v.innerHTML = "פחות ממחיר הסדנה. <em>מהפרויקט הבא</em> היא משתלמת.";
+    } else {
+      var x = total / PRICE;
+      v.innerHTML = 'שילמת <em>פי <span class="n">' + (x >= 10 ? Math.round(x) : x.toFixed(1).replace(/\.0$/, "")) + '</span></em> ממחיר הסדנה.';
+    }
+  }
+  render();
+
+  /* scroll progress + sticky button (shown after 70% of the first screen, hidden on the price section) */
+  var bar = document.getElementById("progress");
+  var sticky = document.getElementById("sticky");
+  var priceSec = document.getElementById("price");
+  var ticking = false, lastY = -1;
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY, vh = window.innerHeight;
+    var max = document.documentElement.scrollHeight - vh;
+    bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0) + ")";
+    var pr = priceSec.getBoundingClientRect();
+    var priceOn = pr.top < vh * 0.75 && pr.bottom > vh * 0.25;
+    sticky.classList.toggle("show", y > vh * 0.7 && !priceOn);
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); setTimeout(function () { if (ticking) onScroll(); }, 120); } }, { passive: true });
+  window.addEventListener("resize", onScroll);
+  onScroll();
+  /* low-cost poll: keeps reveals, progress and the sticky button right even where scroll events are throttled */
+  setInterval(function () {
+    if (window.scrollY !== lastY) { lastY = window.scrollY; onScroll(); if (!reduce) sweepReveals(); }
+  }, 250);
+})();
+</script>
+</body>
+</html>
